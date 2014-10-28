@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!-- 
+  Sample services profile for Peoplebot mobile robot.
+  
+  Author: Michael Morckos <mmorckos@uwaterloo.ca>
+ -->
+
+<ServiceProfile count = "7">
+
+<!-- Service #0 -->
+<!--############-->
+
+<Service parameter_count = "1"
+         name = "Simple motion"
+         type = "SMPL"
+         active = "true"
+         blocking = "true"
+         pausable = "false"
+         global_id = "Walk" >
+
+  <Parameters>
+    <Param name = "Distance"
+           type = "INPUT"
+           data_type = "INT"
+           units = "meters"
+           value = "1000"
+           required = "true"
+           set = "true"
+           modifiable = "true"
+           descr = "Distance to travel" />
+  </Parameters>
+</Service>
+
+<!-- Service #1 -->
+<!--############-->
+
+<Service parameter_count = "1"
+         name = "Simple turning"
+         type = "SMPL"
+         active = "true"
+         blocking = "true"
+         pausable = "false"
+         descr = "Simple turnings"
+         notes = "Robot must not be near walls."
+         global_id = "Turn" >
+
+  <Parameters>
+    <Param name = "Angle"
+           type = "INPUT"
+           data_type = "DBL"
+           units = "Degrees"
+           value = "0.0"
+           required = "true"
+           set = "false"
+           modifiable = "true"
+           savable = "false"
+           descr = "Turning angle of the robot." />
+  </Parameters>
+</Service>
+
+<!-- Service #2 -->
+<!--############-->
+
+<Service name = "Wander"
+         type = "SMPL"
+         active = "true"
+         blocking = "true"
+         pausable = "false"
+         descr = "Random navigation with obstacle."
+         global_id = "Wanderer" >
+</Service>
+
+<!-- Service #3 -->
+<!--############-->
+
+<Service parameter_count = "2"
+         name = "Gripper Control"
+         type = "SMPL"
+         active = "true"
+         blocking = "true"
+         pausable = "false"
+         descr = "Moving the vertically and O/P."
+         global_id = "gripper" >
+         
+  <Parameters>
+    <Param name = "Direction"
+           type = "INPUT"
+           data_type = "BOOL"
+           value = "true"
+           required = "true"
+           set = "false"
+           modifiable = "true"
+           savable = "true"
+           descr = "Direction of gripper."
+           multiple = "true">
+           
+      <key_value name = "Up" value = "true"/>
+      <key_value name = "Down" value = "false"/>
+    </Param>
+
+    <Param name = "Open/Close"
+           type = "INPUT"
+           data_type = "BOOL"
+           value = "true"
+           required = "true"
+           set = "false"
+           modifiable = "true"
+           savable = "true"
+           multiple = "true">
+           
+      <key_value name = "Open" value = "true"/>
+      <key_value name = "Close" value = "false"/>
+    </Param>
+  </Parameters>
+           
+</Service>
+
+<!-- Service #4 -->
+<!--############-->
+
+<Service parameter_count = "1"
+         name = "Search and Pick"
+         type = "SMPL"
+         active = "true"
+         blocking = "true"
+         pausable = "false"
+         descr = "Grab colored object."
+         notes = "Robot must be in good mood"
+         global_id = "peoplebot_blobpick" >
+         
+  <Parameters>           
+    <Param name = "Color"
+           type = "INPUT"
+           data_type = "INT"
+           required = "true"
+           set = "false"
+           modifiable = "true"
+           savable = "false"
+           descr = "Color to search for"
+           multiple = "true" >
+    
+      <key_value name = "Red" value = "1" />
+      <key_value name = "Yellow" value = "2" />
+    </Param>       
+  </Parameters>
+  
+</Service>
+
+<!-- Service #5 -->
+<!--############-->
+
+<Service parameter_count = "1"
+         name = "Go to a dest"
+         type = "SMPL"
+         active = "true"
+         blocking = "true"
+         pausable = "false"
+         global_id = "cruiser_dest" >
+         
+  <Parameters>           
+    <Param name = "Destination"
+           type = "INPUT"
+           data_type = "INT"
+           required = "true"
+           set = "false"
+           modifiable = "true"
+           savable = "false"
+           descr = "Destination code."
+           multiple = "true" >
+    
+      <key_value name = "Left" value = "1" />
+      <key_value name = "Front" value = "3" />
+      <key_value name = "Right" value = "5" />
+      <key_value name = "Center" value = "7" />
+    </Param>       
+  </Parameters>
+  
+</Service>
+
+<!-- Service #6 -->
+<!--############-->
+
+<Service parameter_count = "1"
+         name = "Go to pick zone"
+         type = "SMPL"
+         active = "true"
+         blocking = "true"
+         pausable = "false"
+         global_id = "cruiser_zone" >
+         
+  <Parameters>           
+    <Param name = "Destination"
+           type = "INPUT"
+           data_type = "INT"
+           required = "true"
+           set = "false"
+           modifiable = "true"
+           savable = "false"
+           descr = "Destination code."
+           multiple = "true" >
+    
+      <key_value name = "Left" value = "2" />
+      <key_value name = "Front" value = "4" />
+      <key_value name = "Right" value = "6" />
+    </Param>       
+  </Parameters>
+  
+</Service>
+
+</ServiceProfile>

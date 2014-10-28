@@ -1,0 +1,23 @@
+/*
+ * Resource GPB message.
+ * 
+ * Author: Michael Morckos <mmorckos@uwaterloo.ca>
+ */
+ 
+package Data;
+
+message Resource
+{
+  required int32 serviceId = 1;
+  required int32 id = 2;
+  required string name = 3;
+  required string URL = 4;
+
+  optional bool isReady = 5 [default = true];
+  optional bool isRequired = 6 [default = true];
+  optional bool isModifiable = 7 [default = false];
+  optional bool isSavable = 8 [default = false];
+  optional string descr = 9;
+  
+  optional string globalSvcId = 10 [default = ""];
+}

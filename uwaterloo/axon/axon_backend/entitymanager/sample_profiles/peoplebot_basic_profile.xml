@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!-- 
+  Sample basic profile for Peoplebot mobile robot.
+  
+  Author: Michael Morckos <mmorckos@uwaterloo.ca>
+ -->
+
+<BasicProfile name = "PeopleBot_0"
+              category = "ROBOT"
+              type = "MOBILE"
+              descr = "Mobile robot with an array of range finding sensors, basic gripper and camera."
+              xpos = "1000"
+              ypos = "1500"
+              zpos = "0" >
+</BasicProfile>

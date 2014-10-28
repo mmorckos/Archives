@@ -1,0 +1,36 @@
+/*
+ * Global service GPB message.
+ * 
+ * Author: Michael Morckos <mmorckos@uwaterloo.ca>
+ */
+
+package Data;
+
+message GlobalServiceTuple
+{
+  enum Category
+  {
+    ROBOT = 0;
+    MACHINE = 1;
+  }
+  
+  enum Type
+  {
+    MOBILE = 0;
+    STATIONARY = 1;
+  }
+  
+  required int32 preced = 1;
+  optional Category category = 2;
+  optional Type type = 3;
+  optional string id = 4;
+  optional string serviceGlobalId = 5;
+  repeated string paramName = 6;
+  repeated string paramValue = 7;
+}
+
+message GlobalService
+{
+  required string name = 1;
+  repeated GlobalServiceTuple tuple = 2;
+}

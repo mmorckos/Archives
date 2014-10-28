@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+  Sample global services profile.
+  
+  Author: Michael Morckos <mmorckos@uwaterloo.ca>
+ -->
+
+<GlobalProfile count = "3">
+  <Service name = "Collaboration Demo">
+    <entity category = "ROBOT" type = "MOBILE" id = "0" service_global_id = "cruiser_zone" preced = "1">
+        <key_value param_name = "Destination" param_value = "6" />
+    </entity>
+    
+    <entity category = "ROBOT" type = "STATIONARY" id = "1" service_global_id = "cyton_pick" preced = "1" />
+    
+    <entity category = "ROBOT" type = "MOBILE" id = "0" service_global_id = "peoplebot_blobpick" preced = "2" />
+    
+    <entity category = "ROBOT" type = "MOBILE" id = "0" service_global_id = "cruiser_dest" preced = "3">
+        <key_value param_name = "Destination" param_value = "1" />
+    </entity>    
+    
+    <entity category = "ROBOT" type = "MOBILE" id = "0" service_global_id = "gripper" preced = "4">
+      <key_value param_name = "Open/Close" param_value = "true" />
+      <key_value param_name = "Direction" param_value = "true" />
+    </entity>
+    
+  </Service>
+  
+  <Service name = "Pick and Place Demo">
+    <entity category = "ROBOT" type = "MOBILE" id = "0" service_global_id = "cruiser_zone" preced = "1">
+      <key_value param_name = "Destination" param_value = "6" />
+    </entity>
+    <entity category = "ROBOT" type = "MOBILE" id = "1" service_global_id = "peoplebot_blobpick" preced = "2">
+      <key_value param_name = "Color" param_value = "1" />
+    </entity>
+    <entity category = "ROBOT" type = "MOBILE" id = "0" service_global_id = "cruiser_dest" preced = "3" />
+    <entity category = "ROBOT" type = "MOBILE" id = "0" service_global_id = "peoplebot_grip" preced = "4">
+      
+      <key_value param_name = "Open/Close" param_value = "true" />
+    </entity>
+  </Service>
+  
+  <Service name = "Fake Demo">
+    <entity category = "ROBOT" type = "MOBILE" id = "0" service_global_id = "Walk" preced = "1">
+      <key_value param_name = "Distance" param_value = "1500" />
+    </entity>
+    <entity category = "ROBOT" type = "MOBILE" id = "1" service_global_id = "Walk" preced = "1">
+      <key_value param_name = "Distance" param_value = "1900" />
+    </entity>
+    <entity category = "ROBOT" type = "MOBILE" id = "0" service_global_id = "Turn" preced = "2">
+      <key_value param_name = "Angle" param_value = "90" />
+    </entity>
+    <entity category = "ROBOT" type = "MOBILE" id = "0" service_global_id = "Walk" preced = "3">
+      <key_value param_name = "Distance" param_value = "1200" />
+    </entity>
+  </Service>
+
+</GlobalProfile>

@@ -1,0 +1,32 @@
+/*
+ * Entity basic profile GPB message.
+ * 
+ * Author: Michael Morckos <mmorckos@uwaterloo.ca>
+ */
+ 
+package Data;
+
+message BasicProfile
+{
+  enum Category
+  {
+    ROBOT = 0;
+    MACHINE = 1;
+  }
+  
+  enum Type
+  {
+    MOBILE = 0;
+    STATIONARY = 1;
+  }
+  
+  required string uuid = 1;
+  required string name = 2;
+  required Category category = 3;
+  optional Type type = 4;
+  optional string descr = 5;
+  optional double xPos = 6 [default = 0.0];
+  optional double yPos = 7 [default = 0.0];
+  optional double zPos = 8 [default = 0.0];
+  repeated string serviceNameList = 9;
+}

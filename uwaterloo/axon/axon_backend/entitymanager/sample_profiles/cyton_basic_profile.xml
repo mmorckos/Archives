@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!-- 
+  Sample basic profile for Cyton Alpha robotic arm.
+  
+  Author: Michael Morckos <mmorckos@uwaterloo.ca>
+ -->
+
+<BasicProfile name = "CytonAlpha0"
+              category = "ROBOT"
+              type = "STATIONARY"
+              descr = "Amputated human arm with gripper."
+              xpos = "100"
+              ypos = "200"
+              zpos = "300" >
+</BasicProfile>

@@ -1,0 +1,36 @@
+/*
+ * Service GPB message.
+ * 
+ * Author: Michael Morckos <mmorckos@uwaterloo.ca>
+ */
+
+package Data;
+
+message Service
+{
+  enum Type
+  {
+    SMPL = 0;
+    CPLX = 1;
+    ITRAV = 2;
+  }
+
+  required string entityId = 1;
+  required int32 id = 2;
+  required string name = 3;
+  required Type type = 4;
+  
+  optional int32 depCount = 5;
+  optional int32 fixedDepCount = 6 [default = 0];
+  optional int32 baseDepCount = 7 [default = 0];
+  optional bool isActive = 8 [default = true];
+  optional bool isExec = 9 [default = false];
+  optional bool isBlocking = 10 [default = true];
+  optional bool isPausable = 11 [default = false];
+  optional string descr = 12;
+  optional string notes = 13;
+  repeated int32 serviceList = 14;
+  optional string globalId = 15 [default = ""];
+  optional int32 referenceCount = 16 [default = 0];
+  repeated string providerEntityIdList = 17;
+}

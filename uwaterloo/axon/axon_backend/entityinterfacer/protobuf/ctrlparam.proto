@@ -1,0 +1,52 @@
+/*
+ * Control parameter GPB message.
+ * 
+ * Author: Michael Morckos <mmorckos@uwaterloo.ca>
+ */
+ 
+package Data;
+
+message CtrlParam
+{
+  enum Type
+  {
+    INPUT = 0;
+    OUTPUT = 1;
+    CONFIG = 2;
+    FDBK = 3;
+  }
+  
+  enum DataType
+  {
+    INT = 0;
+    DBL = 1;
+    STR = 2;
+    BOOL = 3;
+  }
+
+  required int32 serviceId = 1;
+  required int32 id = 2;
+  required string name = 3;
+  required Type type = 4;
+  required DataType dataType = 5 [default = DBL];
+
+  optional string units = 6 [default = ""];
+  optional bool isReady = 7 [default = true];
+  optional bool isRequired = 8 [default = true];
+  optional bool isModifiable = 9 [default = true];
+  optional bool isSavable = 10 [default = true];
+  optional bool isMultiple = 11 [default = false];
+  optional string descr = 12;
+  optional int32 val0 = 13;
+  optional double val1 = 14;
+  optional string val2 = 15;
+  optional bool val3 = 16;
+  
+  repeated int32 val0List = 17;
+  repeated double val1List = 18;
+  repeated string val2List = 19;
+  repeated bool val3List = 20;
+  repeated string keyName = 21;
+  
+  optional string globalSvcId = 22 [default = ""];
+}

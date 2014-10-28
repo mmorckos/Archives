@@ -1,0 +1,30 @@
+/*
+ * Parameter GPB message.
+ * 
+ * Author: Michael Morckos <mmorckos@uwaterloo.ca>
+ */
+ 
+package Data;
+
+message Param
+{
+  enum DataType
+  {
+    INT = 0;
+    DBL = 1;
+    STR = 2;
+    BOOL = 3;
+  }
+
+  required int32 id = 1;
+  required int32 serviceId = 2;
+  required int32 ctrlParamId = 3;
+  required DataType dataType = 4 [default = DBL];
+
+  optional int32 val0 = 5;
+  optional double val1 = 6;
+  optional string val2 = 7;
+  optional bool val3 = 8;
+  
+  optional string globalSvcId = 9 [default = ""];
+}

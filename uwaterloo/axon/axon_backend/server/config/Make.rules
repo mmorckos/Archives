@@ -1,0 +1,159 @@
+# **********************************************************************
+#
+# Copyright (c) 2003-2010 ZeroC, Inc. All rights reserved.
+#
+# Modified by: Michael Morckos  <mmorckos@uwaterloo.ca>
+#
+# **********************************************************************
+
+#
+# Select an installation base directory. The directory will be created
+# if it does not exist.
+#
+prefix			 ?= /opt/axon_backend/server-$(SERVER_VERSION)
+
+#
+# The "root directory" for runpath embedded in executables. Can be unset
+# to avoid adding a runpath to entityserver executables.
+#
+embedded_runpath_prefix ?= /opt/Ice-$(VERSION_MAJOR).$(VERSION_MINOR)
+
+#
+# Define OPTIMIZE as yes if you want to build with
+# optimization. Otherwise Ice is build with debug information.
+#
+#OPTIMIZE		= yes
+
+#
+# Define LP64 as yes or no if you want force a 32 or 64 bit. The
+# default is platform-dependent
+#
+#LP64			?= yes
+
+#
+# If Ice is not installed in a standard location, set ICE_HOME to the
+# Ice installation directory.
+#
+#ICE_HOME		?= /opt/Ice-3.4.1
+
+# ----------------------------------------------------------------------
+# Don't change anything below this line!
+# ----------------------------------------------------------------------
+
+#
+# The server version.
+#
+SERVER_VERSION	= 0.1.0
+
+#
+# Common definitions
+#
+ice_language     = cpp
+slice_translator = slice2cpp
+ice_require_cpp  = 1
+
+ifeq ($(shell test -f $(top_srcdir)/config/Make.common.rules && echo 0),0)
+    include $(top_srcdir)/config/Make.common.rules
+else
+    include $(top_srcdir)/ice/config/Make.common.rules
+endif
+
+#
+# Platform specific definitions
+#
+ifeq ($(shell test -f $(top_srcdir)/config/Make.rules.$(UNAME) && echo 0),0)
+    include $(top_srcdir)/config/Make.rules.$(UNAME)
+else
+    include $(top_srcdir)/ice/cpp/config/Make.rules.$(UNAME)
+endif 
+
+install_bindir	  	      := $(prefix)/$(binsubdir)
+install_slicedir          := $(prefix)/slice
+install_configdir         := $(prefix)/config
+install_globalservicesdir := $(prefix)/globalservices
+install_certsdir          := $(prefix)/certs
+install_dbdir             := $(prefix)/db
+install_docdir            := $(prefix)/doc
+
+#install_libdir	  	:= $(prefix)/lib
+#install_phpdir	  	:= $(prefix)/php
+#install_sldir     := $(prefix)/sl
+#install_slbridgedir	  	:= $(prefix)/sl/bridge
+#install_slcallbackdir       := $(prefix)/sl/callback
+
+ifneq ($(embedded_runpath_prefix),)
+    runpath_libdir	:= $(embedded_runpath_prefix)/$(libsubdir)
+endif
+
+ifdef ice_src_dist
+    ifeq ($(ice_cpp_dir), $(ice_dir)/cpp)
+        ICE_LIB_DIR = -L$(ice_cpp_dir)/lib
+    else
+        ICE_LIB_DIR = -L$(ice_cpp_dir)/$(libsubdir)
+    endif
+    ICE_FLAGS 	= -I$(ice_cpp_dir)/include
+endif
+ifdef ice_bin_dist
+    ifneq ($(ice_dir), /usr) 
+        ICE_LIB_DIR = -L$(ice_dir)/$(libsubdir)
+        ICE_FLAGS = -I$(ice_dir)/include
+    endif
+endif
+ICE_LIBS = $(ICE_LIB_DIR) $(LIBS)
+
+ICECPPFLAGS		= -I$(slicedir)
+SLICE2CPPFLAGS		= $(ICECPPFLAGS)
+
+ifdef ice_src_dist
+    ifeq ($(ice_cpp_dir), $(ice_dir)/cpp)
+        SLICEPARSERLIB	= $(ice_cpp_dir)/lib/$(call mklibfilename,Slice,$(VERSION))
+        SLICE2CPP 	= $(ice_cpp_dir)/bin/slice2cpp
+    else
+        SLICEPARSERLIB	= $(ice_cpp_dir)/$(libsubdir)/$(call mklibfilename,Slice,$(VERSION))
+        SLICE2CPP 	= $(ice_cpp_dir)/$(binsubdir)/slice2cpp
+    endif
+else
+    # No dependency on the SLICE2PARSERLIB when building against a binary distribution.
+    SLICEPARSERLIB	= 
+    SLICE2CPP 		= $(ice_dir)/$(binsubdir)/slice2cpp
+endif
+
+EVERYTHING		= all clean install
+
+.SUFFIXES:
+.SUFFIXES:		.cpp .c .o
+
+.cpp.o:
+	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $<
+
+.c.o:
+	$(CC) -c $(CPPFLAGS) $(CFLAGS) $<
+
+%.h %.cpp: $(top_srcdir)/slice/%.ice $(SLICE2CPP) $(SLICEPARSERLIB)
+	rm -f $(*F).h $(*F).cpp
+	$(SLICE2CPP) $(SLICE2CPPFLAGS) $(top_srcdir)/slice/$(*F).ice	
+
+all:: $(SRCS) $(TARGETS)
+
+clean::
+	-rm -f $(TARGETS)
+	-rm -f core *.o *.bak
+
+depend:: $(SRCS) $(SLICE_SRCS)
+	-rm -f .depend
+	if test -n "$(SRCS)" ; then \
+	    $(CXX) -DMAKEDEPEND -M $(CXXFLAGS) $(CPPFLAGS) $(SRCS) | $(top_srcdir)/config/makedepend.py >> .depend; \
+	fi
+
+ifneq ($(SLICE_SRCS),)
+clean::
+	rm -f $(addsuffix .cpp, $(basename $(notdir $(SLICE_SRCS))))
+	rm -f $(addsuffix .h, $(basename $(notdir $(SLICE_SRCS))))
+endif
+
+ifneq ($(TEMPLATE_REPOSITORY),)
+clean::
+	rm -fr $(TEMPLATE_REPOSITORY)
+endif
+
+install::

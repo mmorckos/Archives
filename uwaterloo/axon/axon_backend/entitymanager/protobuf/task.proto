@@ -1,0 +1,38 @@
+/*
+ * Task GPB message.
+ * 
+ * Author: Michael Morckos <mmorckos@uwaterloo.ca>
+ */
+ 
+package Data;
+
+message Task
+{
+  enum Status
+  {
+    INIT = 0;
+    RUNNING = 1;
+    PAUSED = 2;
+    STOPPED = 3;
+    SUCCESS = 4;
+    FAILURE = 5;
+  }
+
+  enum Priority
+  {
+    LOW = 0;
+    NORM = 1;
+    HIGH = 2;
+  }
+
+  required Status status = 1;
+
+  optional Priority priority = 2 [default = NORM];
+  optional bool reqFDBK = 3;
+  optional int32 timeout = 4;
+  optional int32 duration = 5;
+  
+  optional string fdbkMsg = 6 [default = ""];
+  optional int32 serviceId = 7 [default = -1];
+  optional string globalSvcId = 8 [default = ""];
+}

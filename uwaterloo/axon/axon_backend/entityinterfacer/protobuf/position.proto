@@ -1,0 +1,14 @@
+/*
+ * Position GPB message.
+ * 
+ * Author: Michael Morckos <mmorckos@uwaterloo.ca>
+ */
+
+package Data;
+
+message Position
+{
+  optional double xPos = 1 [default = 0.0];
+  optional double yPos = 2 [default = 0.0];
+  optional double zPos = 3 [default = 0.0];
+}
